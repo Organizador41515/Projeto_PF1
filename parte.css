@@ -1,6 +1,18 @@
 .grid {
     display: flex;
     flex-wrap: wrap;
-    width: 400px;
-    height: 300px;
-  }
+    width: 420px;
+    height: auto;
+    justify-content: center;
+}
+
+.grid img {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+h3 {
+    font-family: Arial, sans-serif;
+}
