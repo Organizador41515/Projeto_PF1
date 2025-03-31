@@ -14,15 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'hotdog', img: 'imagens/hotdog.png' }
     ];
 
-    let playerName = '';
-    let cardsChosen = [];
-    let cardsChosenId = [];
-    let cardsWon = [];
-    let lockBoard = false;
-    let attempts = 0;
-    let startTime;
-    let gameInterval;
-
     const grid = document.querySelector('.grid');
     const resultDisplay = document.querySelector('#result');
     const messageDisplay = document.querySelector('#message');
@@ -32,130 +23,118 @@ document.addEventListener('DOMContentLoaded', () => {
     const playerNameInput = document.querySelector('#playerName');
     const startButton = document.querySelector('#startGame');
 
-    startButton.addEventListener('click', startGame);
+    let gameState = {
+        playerName: '',
+        attempts: 0,
+        startTime: 0,
+        gameInterval: null,
+        cardsChosen: [],
+        cardsChosenId: [],
+        cardsWon: [],
+        lockBoard: false,
+        shuffledCards: []
+    };
 
-    function startGame() {
+    const startGame = () => {
         if (!playerNameInput.value.trim()) {
             alert('Por favor, digite seu nome antes de iniciar o jogo.');
             return;
         }
 
-        playerName = playerNameInput.value.trim();
+        gameState = {
+            ...gameState,
+            playerName: playerNameInput.value.trim(),
+            attempts: 0,
+            startTime: Date.now(),
+            cardsWon: [],
+            shuffledCards: [...cardArray].sort(() => Math.random() - 0.5)
+        };
+
         playerNameInput.disabled = true;
         startButton.disabled = true;
+        attemptsDisplay.textContent = gameState.attempts;
+        messageDisplay.textContent = '';
+        grid.innerHTML = '';
 
-        grid.innerHTML = ''; // Limpa o tabuleiro se for reiniciar
-        attempts = 0;
-        attemptsDisplay.textContent = attempts;
-        cardsWon = [];
-        cardArray.sort(() => Math.random() - 0.5);
-
-        createBoard();
+        createBoard(gameState.shuffledCards);
         startTimer();
-    }
+    };
 
-    function startTimer() {
-        startTime = Date.now();
-        timerDisplay.textContent = '0';
-        gameInterval = setInterval(() => {
-            timerDisplay.textContent = Math.floor((Date.now() - startTime) / 1000);
+    const startTimer = () => {
+        gameState.gameInterval = setInterval(() => {
+            timerDisplay.textContent = Math.floor((Date.now() - gameState.startTime) / 1000);
         }, 1000);
-    }
+    };
 
-    function stopTimer() {
-        clearInterval(gameInterval);
-    }
+    const stopTimer = () => clearInterval(gameState.gameInterval);
 
-    function createBoard() {
-        cardArray.forEach((_, i) => {
+    const createBoard = (shuffledCards) => {
+        shuffledCards.forEach((_, i) => {
             const card = document.createElement('img');
             card.setAttribute('src', 'imagens/blank.png');
             card.setAttribute('data-id', i);
-            card.addEventListener('click', flipCard);
+            card.addEventListener('click', () => flipCard(i));
             grid.appendChild(card);
         });
-    }
+    };
 
-    function checkForMatch() {
+    const flipCard = (cardId) => {
+        if (gameState.lockBoard || gameState.cardsChosenId.includes(cardId)) return;
+
+        const newChosen = [...gameState.cardsChosen, gameState.shuffledCards[cardId].name];
+        const newChosenId = [...gameState.cardsChosenId, cardId];
+        document.querySelector(`[data-id='${cardId}']`).setAttribute('src', gameState.shuffledCards[cardId].img);
+
+        if (newChosen.length === 2) {
+            gameState = { ...gameState, lockBoard: true, attempts: gameState.attempts + 1 };
+            attemptsDisplay.textContent = gameState.attempts;
+            setTimeout(() => checkForMatch(newChosen, newChosenId), 500);
+        } else {
+            gameState = { ...gameState, cardsChosen: newChosen, cardsChosenId: newChosenId };
+        }
+    };
+
+    const checkForMatch = (chosen, chosenId) => {
         const cards = document.querySelectorAll('.grid img');
-        const [optionOneId, optionTwoId] = cardsChosenId;
+        let newCardsWon = [...gameState.cardsWon];
 
-        if (cardsChosen[0] === cardsChosen[1] && optionOneId !== optionTwoId) {
+        if (chosen[0] === chosen[1] && chosenId[0] !== chosenId[1]) {
             messageDisplay.textContent = 'Parabéns! Você encontrou um par!';
-            cards[optionOneId].setAttribute('src', 'imagens/white.png');
-            cards[optionTwoId].setAttribute('src', 'imagens/white.png');
-            cards[optionOneId].removeEventListener('click', flipCard);
-            cards[optionTwoId].removeEventListener('click', flipCard);
-            cardsWon.push(cardsChosen);
+            newCardsWon.push(chosen);
+            chosenId.forEach(id => {
+                cards[id].setAttribute('src', 'imagens/white.png');
+                cards[id].removeEventListener('click', flipCard);
+            });
         } else {
             messageDisplay.textContent = 'Tente novamente!';
-            setTimeout(() => {
-                cards[optionOneId].setAttribute('src', 'imagens/blank.png');
-                cards[optionTwoId].setAttribute('src', 'imagens/blank.png');
-                resetTurn();
-            }, 500);
-            return;
+            setTimeout(() => chosenId.forEach(id => cards[id].setAttribute('src', 'imagens/blank.png')), 500);
         }
 
-        resetTurn();
-        resultDisplay.textContent = cardsWon.length;
+        gameState = { ...gameState, cardsChosen: [], cardsChosenId: [], cardsWon: newCardsWon, lockBoard: false };
+        resultDisplay.textContent = newCardsWon.length;
+        if (newCardsWon.length === cardArray.length / 2) gameOver();
+    };
 
-        if (cardsWon.length === cardArray.length / 2) {
-            gameOver();
-        }
-    }
-
-    function flipCard() {
-        if (lockBoard) return;
-        let cardId = this.getAttribute('data-id');
-        if (cardsChosenId.includes(cardId)) return;
-
-        cardsChosen.push(cardArray[cardId].name);
-        cardsChosenId.push(cardId);
-        this.setAttribute('src', cardArray[cardId].img);
-
-        if (cardsChosen.length === 2) {
-            attempts++;
-            attemptsDisplay.textContent = attempts;
-            lockBoard = true;
-            setTimeout(checkForMatch, 500);
-        }
-    }
-
-    function resetTurn() {
-        cardsChosen = [];
-        cardsChosenId = [];
-        lockBoard = false;
-    }
-
-    function gameOver() {
+    const gameOver = () => {
         stopTimer();
-        messageDisplay.textContent = `Parabéns, ${playerName}! Você encontrou todos os pares!`;
+        messageDisplay.textContent = `Parabéns, ${gameState.playerName}! Você encontrou todos os pares!`;
         saveRecord();
-    }
+    };
 
-    function saveRecord() {
+    const saveRecord = () => {
         const timeTaken = parseInt(timerDisplay.textContent);
-        const newRecord = { name: playerName, time: timeTaken, attempts: attempts };
-
+        const newRecord = { name: gameState.playerName, time: timeTaken, attempts: gameState.attempts };
         let records = JSON.parse(localStorage.getItem('memoryGameRecords')) || [];
-        records.push(newRecord);
-        records.sort((a, b) => a.time - b.time || a.attempts - b.attempts);
-        records = records.slice(0, 10);
 
+        records = [...records, newRecord].sort((a, b) => a.time - b.time || a.attempts - b.attempts).slice(0, 10);
         localStorage.setItem('memoryGameRecords', JSON.stringify(records));
-        updateRecordTable();
-    }
+        updateRecordTable(records);
+    };
 
-    function updateRecordTable() {
-        let records = JSON.parse(localStorage.getItem('memoryGameRecords')) || [];
-        recordTable.innerHTML = '';
-        records.forEach((record, index) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `<td>${index + 1}</td><td>${record.name}</td><td>${record.time}</td><td>${record.attempts}</td>`;
-            recordTable.appendChild(row);
-        });
-    }
+    const updateRecordTable = (records = JSON.parse(localStorage.getItem('memoryGameRecords')) || []) => {
+        recordTable.innerHTML = records.map((record, index) => `<tr><td>${index + 1}</td><td>${record.name}</td><td>${record.time}</td><td>${record.attempts}</td></tr>`).join('');
+    };
 
+    startButton.addEventListener('click', startGame);
     updateRecordTable();
 });
