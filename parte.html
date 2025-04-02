@@ -1,0 +1,38 @@
+s<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo da Memória</title>
+    <link rel="stylesheet" href="parte.css">
+    <script defer src="parteFuncional.js"></script>
+</head>
+<body>
+
+    <label for="playerName">Nome:</label>
+    <input type="text" id="playerName" placeholder="Digite seu nome">
+    <button id="startGame">Iniciar Jogo</button>
+
+    <h3>Tempo: <span id="timer">0</span> segundos</h3>
+    <h3>Score: <span id="result">0</span></h3>
+    <h3>Tentativas: <span id="attempts">0</span></h3>
+    <p id="message"></p>
+    <div class="grid"></div>
+
+    <h3>Recordes</h3>
+    <table id="record-table">
+        <thead>
+            <tr>
+                <th>Posição</th>
+                <th>Nome</th>
+                <th>Tempo (s)</th>
+                <th>Tentativas</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</body>
+</html>
+
+!

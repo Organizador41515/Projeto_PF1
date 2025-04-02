@@ -1,0 +1,30 @@
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    width: 420px;
+    height: auto;
+    justify-content: center;
+}
+
+.grid img {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+h3 {
+    font-family: Arial, sans-serif;
+}
+
+#record-table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 300px;
+}
+
+#record-table th, #record-table td {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+}
