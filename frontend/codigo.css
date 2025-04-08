@@ -124,12 +124,12 @@ body {
 
 .grid1, .grid2 {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: 100px 50px 100px;
+  grid-template-columns: repeat(4, 100px);
   grid-auto-rows: 100px;
-  max-width: 420px;
- 
+  gap: 10px;
+  justify-content: center;
 }
+
 
 #record-table {
   width: 100%;

@@ -14,44 +14,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const recordTable = document.querySelector('#record-table tbody');
 
   const Lista_de_cartas_1 = [
-    { name: 'batata', img: 'imagens/fries.png' }, //1 
-    { name: 'hamburguer', img: 'imagens/cheeseburger.png' }, //2
-    { name: 'sorvete', img: 'imagens/ice-cream.png' }, //3
-    { name: 'pizza', img: 'imagens/pizza.png' }, //4
-    { name: 'milkshake', img: 'imagens/milkshake.png' }, //5
-    { name: 'cachorro-quente', img: 'imagens/hotdog.png' }, //6
-    { name: 'sopa', img: 'imagens/sopa.png' }, //7
-    { name: 'salada', img: 'imagens/salada.png' }, //8
-
-
-    { name: 'batata', img: 'imagens/fries.png' }, //1  copia
-    { name: 'hamburguer', img: 'imagens/cheeseburger.png' }, //2 copia
-    { name: 'sorvete', img: 'imagens/ice-cream.png' }, //3 copia
-    { name: 'pizza', img: 'imagens/pizza.png' }, //4 copia
-    { name: 'milkshake', img: 'imagens/milkshake.png' }, //5 copia
-    { name: 'cachorro-quente', img: 'imagens/hotdog.png' }, //6 copia
-    { name: 'sopa', img: 'imagens/sopa.png' }, //7  copia
-    { name: 'salada', img: 'imagens/salada.png' }, //8 copia
-
+    { name: 'batata', img: 'imagens/fries.png' },
+    { name: 'hamburguer', img: 'imagens/cheeseburger.png' },
+    { name: 'sorvete', img: 'imagens/ice-cream.png' },
+    { name: 'pizza', img: 'imagens/pizza.png' },
+    { name: 'milkshake', img: 'imagens/milkshake.png' },
+    { name: 'cachorro-quente', img: 'imagens/hotdog.png' },
+    { name: 'sopa', img: 'imagens/sopa.png' },
+    { name: 'salada', img: 'imagens/salada.png' },
+    { name: 'batata', img: 'imagens/fries.png' },
+    { name: 'hamburguer', img: 'imagens/cheeseburger.png' },
+    { name: 'sorvete', img: 'imagens/ice-cream.png' },
+    { name: 'pizza', img: 'imagens/pizza.png' },
+    { name: 'milkshake', img: 'imagens/milkshake.png' },
+    { name: 'cachorro-quente', img: 'imagens/hotdog.png' },
+    { name: 'sopa', img: 'imagens/sopa.png' },
+    { name: 'salada', img: 'imagens/salada.png' },
   ];
 
   const Lista_de_cartas_2 = [
-    { name: 'noz', img: 'imagens/acorn.png' },//1
-    { name: 'abelha', img: 'imagens/bee.png' },//2
-    { name: 'joaninha', img: 'imagens/ladybug.png' },//3
-    { name: 'lua', img: 'imagens/moon.png' },//4
-    { name: 'cogumelo', img: 'imagens/mushroom.png' },//5
-    { name: 'neve', img: 'imagens/snow.png' },//6
-    { name: 'agua', img: 'imagens/water.png' },//7
-    { name: 'mundo', img: 'imagens/world.png' },//8
-    { name: 'noz', img: 'imagens/acorn.png' },// 1 copia
-    { name: 'abelha', img: 'imagens/bee.png' },//2 copia
-    { name: 'joaninha', img: 'imagens/ladybug.png' },//3 copia
-    { name: 'lua', img: 'imagens/moon.png' },//4 copia
-    { name: 'cogumelo', img: 'imagens/mushroom.png' },//5 copia
-    { name: 'neve', img: 'imagens/snow.png' },//6 copia
-    { name: 'agua', img: 'imagens/water.png' },//7 copia
-    { name: 'mundo', img: 'imagens/world.png' },//8 copia
+    { name: 'noz', img: 'imagens/acorn.png' },
+    { name: 'abelha', img: 'imagens/bee.png' },
+    { name: 'joaninha', img: 'imagens/ladybug.png' },
+    { name: 'lua', img: 'imagens/moon.png' },
+    { name: 'cogumelo', img: 'imagens/mushroom.png' },
+    { name: 'neve', img: 'imagens/snow.png' },
+    { name: 'agua', img: 'imagens/water.png' },
+    { name: 'mundo', img: 'imagens/world.png' },
+    { name: 'noz', img: 'imagens/acorn.png' },
+    { name: 'abelha', img: 'imagens/bee.png' },
+    { name: 'joaninha', img: 'imagens/ladybug.png' },
+    { name: 'lua', img: 'imagens/moon.png' },
+    { name: 'cogumelo', img: 'imagens/mushroom.png' },
+    { name: 'neve', img: 'imagens/snow.png' },
+    { name: 'agua', img: 'imagens/water.png' },
+    { name: 'mundo', img: 'imagens/world.png' },
   ];
 
   let gameState = {};
@@ -219,6 +216,5 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   };
 
-  // Carrega rankings ao abrir o jogo
   loadRecords();
 });
