@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jogo da Memória</title>
+  <link rel="stylesheet" href="codigo.css" />
+  <script defer src="codigo.js"></script>
+</head>
+<body>
+  <!-- Tela de Login -->
+  <div class="login" id="login-screen">
+    <h1 class="login__title">JOGO DA MEMÓRIA</h1>
+    <div class="login__box">
+      <input type="text" id="playerName" placeholder="Digite seu nome (campo obrigatório*)" required class="login__input">
+    </div>
+    <div class="login__box">
+      <button id="startGame" class="login__button">Iniciar Jogo</button>
+    </div>
+    <div class="caixa_de_informacoes">
+      <div class="info-box login__regras">
+        <h2>Regras do Jogo</h2>
+        <p>
+          <strong>Objetivo:</strong> Encontrar todos os pares de cartas.<br> <br>
+          <strong>Preparação:</strong> Embaralhar as cartas e colocá-las sobre uma superfície plana.<br> <br>
+          <strong>Rodada:</strong> O jogador vira duas cartas.<br> <br>
+          <strong>Acerto:</strong> Se forem iguais, joga novamente e quantificando uma tentativa a mais.<br> <br>
+          <strong>Erro:</strong> Se forem diferentes, vira novamente e passa a vez quantificando uma tentativa a mais.<br> <br>
+          <strong>Vencedor:</strong> quando(se) tiver encontrado todos os pares ao final.
+        </p>
+      </div>
+      <div class="info-box login__contexto">
+        <h2>Objetivo do Jogo</h2>
+        <p>
+          O jogo consiste em um número par de peças com imagens na face e uma imagem genérica no verso.<br> <br>
+          Cada imagem aparece exatamente duas vezes.<br><br>
+          O jogador vira duas cartas. Se forem iguais, permanecem viradas. Se forem diferentes, viram novamente repousando com seu verso para cima.<br> <br>
+          O objetivo é encontrar todos os pares com o menor número de tentativas possível ecom o menor tempo .<br>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interface do Jogo -->
+  <main id="game-interface" style="display: none;">
+    <div class="game-container">
+      <aside class="sidebar">
+        <div class="status-box">
+          <h3>Tempo</h3>
+          <p><span id="timer">0</span> segundos</p>
+        </div>
+        <div class="status-box">
+          <h3>Pontuação</h3>
+          <p><span id="result">0</span></p>
+        </div>
+        <div class="status-box">
+          <h3>Tentativas</h3>
+          <p><span id="attempts">0</span></p>
+        </div>
+      </aside>
+
+      <section class="main-game">
+        <h2>Bem-vindo, jogador <span id="playerNameDisplay"></span>!</h2>
+        <p id="message"></p>
+
+        <h2>Fase 1</h2>
+        <div class="grid1"></div>
+
+        <h2>Fase 2</h2>
+        <div class="grid2"></div>
+
+        <h3>Top 10 Melhores Recordes</h3>
+        <table id="record-table">
+          <thead>
+            <tr>
+              <th>Posição</th>
+              <th>Nome</th>
+              <th>Tempo (s)</th>
+              <th>Número de tentativas</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
