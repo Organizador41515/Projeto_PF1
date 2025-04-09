@@ -120,14 +120,17 @@ document.addEventListener('DOMContentLoaded', () => {
       card.setAttribute('data-fase', fase);
       card.classList.add('card-img');
       grid.appendChild(card);
-      card.addEventListener('click', () => handleCardClick(card, state, fase));
+
+      const handleClick = () => handleCardClick(card, state, fase, handleClick);
+      card.addEventListener('click', handleClick);
+
       state.cardsElementMap.set(i, card);
     });
 
     gameState[fase] = state;
   };
 
-  const handleCardClick = (card, state, fase) => {
+  const handleCardClick = (card, state, fase, handler) => {
     const id = Number(card.getAttribute('data-id'));
 
     if (state.cardsChosenId.includes(id) || state.cardsChosen.length === 2) return;
@@ -151,8 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (name1 === name2 && id1 !== id2) {
       messageDisplay.textContent = 'Parabéns! Você encontrou um par!';
-      card1.removeEventListener('click', handleCardClick);
-      card2.removeEventListener('click', handleCardClick);
+      card1.style.pointerEvents = 'none';
+      card2.style.pointerEvents = 'none';
       gameState.cardsWon.push(name1);
     } else {
       messageDisplay.textContent = 'Tente novamente!';

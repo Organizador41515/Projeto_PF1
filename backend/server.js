@@ -46,6 +46,14 @@ app.post('/rankings', (req, res) => {
   res.status(201).json({ message: 'Recorde salvo com sucesso.' });
 });
 
+// Rota raiz (http://localhost:3000/)
+app.get('/', (req, res) => {
+  res.send(`
+    <h1>🎮 Servidor do Jogo da Memória está rodando!</h1>
+    <p>Rota de rankings: <a href="/rankings">/rankings</a></p>
+  `);
+});
+
 // Inicia o servidor
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
